@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Mashtags</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hashtag_loading">One hashtag coming right up...</string>
+    <string name="key_text">Hashtags</string>
+    <string name="value_text">Number of hits</string>
     <string name="action_settings">Settings</string>
 </resources>

@@ -21,11 +21,29 @@
         android:layout_below="@+id/btnConnect"
         android:layout_centerHorizontal="true" />
 
-    <TextView android:id="@+id/example_text"
-        android:text="@string/hello_world"
+    <TextView android:id="@+id/hashtag_text"
+        android:text="@string/hashtag_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSummary"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView android:id="@+id/text1"
+        android:text="@string/key_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_toStartOf="@+id/tvSummary"
+        android:layout_toLeftOf="@+id/tvSummary" />
+
+    <TextView android:id="@+id/text2"
+        android:text="@string/value_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/text1"
+        android:layout_alignRight="@+id/hashtag_text"
+        android:layout_alignEnd="@+id/hashtag_text" />
+
 
 </RelativeLayout>

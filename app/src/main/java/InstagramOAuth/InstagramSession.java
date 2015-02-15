@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.Context;
 
+import java.util.Set;
+
 /**
  * Manage access token and user name. Uses shared preferences to store access
  * token and user name.

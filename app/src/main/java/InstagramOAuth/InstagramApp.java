@@ -25,6 +25,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.example.android.mashtags.apiKey;
+import RhineAPI.RhineAsyncTask;
 
 import InstagramOAuth.InstagramDialog.OAuthDialogListener;
 
@@ -42,6 +43,8 @@ public class InstagramApp {
     private String mAccessToken;
     private Context mCtx;
 
+    public HashMap<String, Integer> hashtags = new HashMap<String,Integer>();
+
     private String mClientId;
     private String mClientSecret;
 
@@ -56,7 +59,7 @@ public class InstagramApp {
      * (https://developer.github.com/)
      */
 
-    public static String mCallbackUrl = "";
+    public static String mCallbackUrl = "http://kennydurk.in";
     private static final String AUTH_URL = "https://api.instagram.com/oauth/authorize/";
     private static final String TOKEN_URL = "https://api.instagram.com/oauth/access_token";
     private static final String API_URL = "https://api.instagram.com/v1";
@@ -177,7 +180,7 @@ public class InstagramApp {
     }
 
     private void fetchTags() {
-        final String mTag = "Kuvasz";
+        final String mTag = RhineAsyncTask.queryTag;
 
         mProgress.setMessage("Finalizing ...");
 
@@ -199,8 +202,6 @@ public class InstagramApp {
                     JSONObject jsonObj = (JSONObject) new JSONTokener(response).nextValue();
                     JSONArray data = jsonObj.getJSONArray("data");
 
-                    HashMap<String, Integer> hashtags = new HashMap<String,Integer>();
-
                     for(int i = 0; i < data.length(); i++){
                         JSONObject post = data.getJSONObject(i);
                         JSONArray tags = post.getJSONArray("tags");
@@ -210,17 +211,6 @@ public class InstagramApp {
                             hashtags.put(tag, count + 1);
                         }
                     }
-
-                    Set keys = hashtags.keySet();
-                    Collection values = hashtags.values();
-
-                    Log.i(TAG,"BEGIN HASHMAP");
-                    Log.i(TAG,"KEYS");
-                    Log.i(TAG,keys.toString());
-                    Log.i(TAG,"VALUES");
-                    Log.i(TAG,values.toString());
-                    Log.i(TAG,"END HASHMAP");
-
                 } catch (Exception ex) {
                     what = WHAT_ERROR;
                     ex.printStackTrace();
