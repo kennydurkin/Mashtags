@@ -54,23 +54,18 @@ public class MashFragment extends Fragment {
              * Sorting algorithm of the hashmap
              **/
             SortedMap mHashtags = MapValueSort.getValueSortedMap(mApp.hashtags);
-            //Iterator tagItr = mHashtags.keySet().iterator();
-            //Iterator cntItr = mHashtags.values().iterator();
 
-            /*Log.i(LOG_TAG, "BEGIN SORTED LIST");
-            while (tagItr.hasNext() && cntItr.hasNext()) {
-                Log.e(LOG_TAG,"The tag #" + tagItr.next() + " had " + cntItr.next() + " matches.");
-            }
-            Log.i(LOG_TAG,"END SORTED LIST");*/
+            hashtagView.append("\n");
+            countView.append("\n");
 
             Set keys = mHashtags.keySet();
             Iterator itr = keys.iterator();
 
-            for (int i=0; i<5; i++)
+            for (int i=0; i<6; i++)
             {
                 String key = (String) itr.next();
                 Integer value = (Integer) mHashtags.get(key);
-                hashtagView.append("\n"+key+"\n");
+                hashtagView.append("\n#"+key+"\n");
                 countView.append("\n"+value.toString()+"\n");
             }
 
