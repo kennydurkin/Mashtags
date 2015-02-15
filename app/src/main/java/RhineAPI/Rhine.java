@@ -1,4 +1,4 @@
-package com.example.android.mashtags;
+package RhineAPI;
 
 import java.util.List;
 import java.net.URLConnection;

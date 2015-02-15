@@ -7,7 +7,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -44,6 +49,7 @@ public class InstagramApp {
     private static int WHAT_FINALIZE = 0;
     private static int WHAT_ERROR = 1;
     private static int WHAT_FETCH_INFO = 2;
+    private static int WHAT_FETCH_TAGS = 3;
 
     /**
      * Callback url, as set in 'Manage OAuth Costumers' page
@@ -119,7 +125,7 @@ public class InstagramApp {
 
                     mAccessToken = jsonObj.getString("access_token");
                     apiKey.setInstagramAccess(mAccessToken);
-                    Log.i(TAG, "Got access token: " + apiKey.getInstagramAccess());
+                    Log.i(TAG, "Got access token: " + mAccessToken);
 
                     String id = jsonObj.getJSONObject("user").getString("id");
                     String user = jsonObj.getJSONObject("user").getString("username");
@@ -138,13 +144,13 @@ public class InstagramApp {
     }
 
     private void fetchUserName() {
-        mProgress.setMessage("Finalizing ...");
+        mProgress.setMessage("Next step: Username ...");
 
         new Thread() {
             @Override
             public void run() {
                 Log.i(TAG, "Fetching user info");
-                int what = WHAT_FINALIZE;
+                int what = WHAT_FETCH_TAGS;
                 try {
                     URL url = new URL(API_URL + "/users/" + mSession.getId() + "/?access_token=" + mAccessToken);
 
@@ -170,6 +176,62 @@ public class InstagramApp {
 
     }
 
+    private void fetchTags() {
+        final String mTag = "Kuvasz";
+
+        mProgress.setMessage("Finalizing ...");
+
+        new Thread() {
+            @Override
+            public void run() {
+                Log.i(TAG, "Fetching posts with the tag " + mTag);
+                int what = WHAT_FINALIZE;
+                try {
+                    URL url = new URL(API_URL + "/tags/" + mTag + "/media/recent?access_token=" + mAccessToken);
+
+                    Log.d(TAG, "Opening URL " + url.toString());
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.setDoInput(true);
+                    urlConnection.connect();
+                    String response = streamToString(urlConnection.getInputStream());
+                    System.out.println(response);
+                    JSONObject jsonObj = (JSONObject) new JSONTokener(response).nextValue();
+                    JSONArray data = jsonObj.getJSONArray("data");
+
+                    HashMap<String, Integer> hashtags = new HashMap<String,Integer>();
+
+                    for(int i = 0; i < data.length(); i++){
+                        JSONObject post = data.getJSONObject(i);
+                        JSONArray tags = post.getJSONArray("tags");
+                        for(int j=0;j < tags.length(); j++) {
+                            String tag = tags.getString(j);
+                            Integer count = hashtags.containsKey(tag) ? hashtags.get(tag) : 0;
+                            hashtags.put(tag, count + 1);
+                        }
+                    }
+
+                    Set keys = hashtags.keySet();
+                    Collection values = hashtags.values();
+
+                    Log.i(TAG,"BEGIN HASHMAP");
+                    Log.i(TAG,"KEYS");
+                    Log.i(TAG,keys.toString());
+                    Log.i(TAG,"VALUES");
+                    Log.i(TAG,values.toString());
+                    Log.i(TAG,"END HASHMAP");
+
+                } catch (Exception ex) {
+                    what = WHAT_ERROR;
+                    ex.printStackTrace();
+                }
+
+                mHandler.sendMessage(mHandler.obtainMessage(what, 3, 0));
+            }
+        }.start();
+
+    }
+
 
     private Handler mHandler = new Handler() {
         @Override
@@ -182,9 +244,15 @@ public class InstagramApp {
                 else if(msg.arg1 == 2) {
                     mListener.onFail("Failed to get user information");
                 }
+                else if(msg.arg1 == 3) {
+                    mListener.onFail("Failed to get posts with tags");
+                }
             }
             else if(msg.what == WHAT_FETCH_INFO) {
                 fetchUserName();
+            }
+            else if(msg.what == WHAT_FETCH_TAGS) {
+                fetchTags();
             }
             else {
                 mProgress.dismiss();
