@@ -180,7 +180,8 @@ public class InstagramApp {
     }
 
     private void fetchTags() {
-        final String mTag = RhineAsyncTask.queryTag;
+        //final String mTag = RhineAsyncTask.queryTag;
+        final String mTag = "puppy";
 
         mProgress.setMessage("Finalizing ...");
 

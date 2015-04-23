@@ -61,9 +61,9 @@ public class Rhine {
     public static final String subclass (String x, String y) { return "{\"subclass\": [" + x + "," + y + "]}"; }
     public static final String clustering (List<String> x) { String b = "{\"clustering\": ["; for (String e : x) b += e + ","; if (x.size() > 1) b = b.substring(0, b.length() - 1); return b + "]}"; }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         Rhine x = new Rhine("NEKEMBIPUXPJYZCZIMAXXZJVK");
         System.out.println(x.run(extraction(image("http://i.imgur.com/jaVav95.jpg"))));
         //System.out.println(x.run(subclass(entity("Mango"), entity("Tasty"))));
-    }*/
+    }
 }

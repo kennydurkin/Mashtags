@@ -1,13 +1,15 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/muted_red">
 
     <LinearLayout
         android:gravity="center_vertical"
         android:layout_gravity="left"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical"
+        android:background="@color/muted_red"
         android:padding="16dp">
 
         <Button android:id="@+id/btnConnect"
@@ -17,6 +19,8 @@
 
         <TextView
             android:id="@+id/tvSummary"
+            android:textColor="@color/white"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -28,6 +32,8 @@
 
         <TextView android:id="@+id/hashtag_text"
             android:text="@string/hashtag_loading"
+            android:textColor="@color/white"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp" />
@@ -37,6 +43,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"
             android:layout_width="match_parent"
+            android:background="@color/white"
             android:orientation="horizontal">
             <LinearLayout
                 android:gravity="left"
@@ -45,10 +52,18 @@
                 android:orientation="vertical">
                 <TextView android:id="@+id/text1"
                     android:text="@string/key_text"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:paddingRight="2dp"/>
             </LinearLayout>
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/white" />
             <LinearLayout
                 android:gravity="center_horizontal"
                 android:layout_gravity="center"
@@ -57,9 +72,13 @@
                 android:orientation="vertical">
                 <TextView android:id="@+id/text2"
                     android:text="@string/value_text"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:paddingLeft="2dp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

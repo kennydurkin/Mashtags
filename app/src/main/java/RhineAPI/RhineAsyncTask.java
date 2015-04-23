@@ -41,9 +41,9 @@ public class RhineAsyncTask extends AsyncTask<String, String, String>
     @Override
     protected String doInBackground(String... arg0) {
         String mApiKey = apiKey.getRhineKey();
-        String mImageURL = "http://i.imgur.com/jaVav95.jpg";
-
-        Rhine rhine = new Rhine(mApiKey);
+        String mImageURL = "http://i.imgur.com/qAjcoZP.jpg";
+        String result = "puppy";
+        /*Rhine rhine = new Rhine(mApiKey);
         String result = rhine.run(rhine.extraction(rhine.image(mImageURL)));
 
         try {
@@ -57,7 +57,7 @@ public class RhineAsyncTask extends AsyncTask<String, String, String>
             Log.i(LOG_TAG,"Relevancy of " + primary.getString("relevance"));
         } catch(JSONException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
         try {
             InputStream in = new URL(mImageURL).openStream();
@@ -72,7 +72,7 @@ public class RhineAsyncTask extends AsyncTask<String, String, String>
     @Override
     protected void onPostExecute(String result) {
         TextView textView = (TextView) rootView.findViewById(R.id.hashtag_text);
-        textView.setText("Finding hashtags similar to: " + queryTag);
+        textView.setText("Log in to find hashtags similar to: " + result);
 
         ImageView imageView = (ImageView) rootView.findViewById(R.id.imageView);
         if (bmp != null)
